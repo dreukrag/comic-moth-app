@@ -38,7 +38,7 @@ const SmallTheme = createMuiTheme({
     }
 });
 
-export class CollectionItem extends React.Component{
+export class CollectionItems extends React.Component{
     render = () =>{
         var CollectionItemList = [];
         this.props.Items.forEach(function(Item) {
@@ -59,6 +59,6 @@ export class CollectionItem extends React.Component{
         )
     }
 }
-CollectionItem.defaultProps = {
+CollectionItems.defaultProps = {
     Items:[{Name:'None'}]
 }
