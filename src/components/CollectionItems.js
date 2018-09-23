@@ -1,6 +1,6 @@
 import React from 'react'
-import React from 'react'
 
+import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -38,7 +38,7 @@ const SmallTheme = createMuiTheme({
     }
 });
 
-export class CollectionItems extends React.Component{
+export default class CollectionItems extends React.Component{
     render = () =>{
         var CollectionItemList = [];
         this.props.Items.forEach(function(Item) {
@@ -53,7 +53,7 @@ export class CollectionItems extends React.Component{
         return (
             <MuiThemeProvider theme={SmallTheme}>
             <List  disablePadding>
-
+                {CollectionItemList}
             </List>
             </MuiThemeProvider>
         )

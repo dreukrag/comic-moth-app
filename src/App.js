@@ -28,6 +28,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Share from '@material-ui/icons/Share';
 import Search from '@material-ui/icons/Search';
 
+import Collection from './components/Collection'
+import CollectionItems from './components/CollectionItems'
+
 import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -122,9 +125,17 @@ const SmallTheme = createMuiTheme({
 });
 
 class App extends Component {
-  state = {
-    open:false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      DataFromApi:{
+        collections:[],
+        collectionsItems:[]
+      }
+    };
   }
+
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -140,7 +151,7 @@ class App extends Component {
         {/* content */}
         <div style = {content}>
         {/* Coleções */}
-          <List style={{display:'inherit'}} className={ObjectToCss(testCss)}>
+          <List style={{display:'none'}} className={ObjectToCss(testCss)}>
 
             <List>
               <ListItem button onClick={this.handleClick}>
@@ -179,6 +190,10 @@ class App extends Component {
               </ListItem>
             </List>
           </List>
+          <Collection collections = {this.state.DataFromApi.collections} collectionsItems = {this.state.DataFromApi.collectionsItems}>
+            <CollectionItems>
+            </CollectionItems>
+          </Collection>
         </div>
         {/* Buttons */}
         <BottomNavigation style={bottom}>
@@ -189,7 +204,31 @@ class App extends Component {
       </div>
     );
   }
+  componentDidMount = () =>{
+    this.setState({
+      DataFromApi:{
+        collections:[
+          {id:1, name:'Tex'},
+          {id:2, name:'Tex Especial'},
+          {id:3, name:'Tex Super Especial'},
+        ],
+        collectionsItems:[
+          {collectionId:1, name:'1ª edição'},
+          {collectionId:1, name:'2ª edição'},
+          {collectionId:1, name:'3ª edição'},
+          {collectionId:2, name:'Uivo do lobo'},
+          {collectionId:2, name:'Fantasma do deserto'},
+          {collectionId:3, name:'1º especial'},
+          {collectionId:3, name:'2º especial'},
+          {collectionId:3, name:'3º especial'},
+          {collectionId:3, name:'4º especial'},
+        ]
+      }
+    })
+  }
 }
+
+
 
 const ObjectToCss = (cssobj) => {
   let cssString = '';
