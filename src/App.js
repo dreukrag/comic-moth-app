@@ -28,7 +28,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Share from '@material-ui/icons/Share';
 import Search from '@material-ui/icons/Search';
 
-import Collection from './components/Collection'
+import {CreateCollectionsList} from './components/Collection'
+import NewCollectionItem from './components/NewCollectionItem'
 import CollectionItems from './components/CollectionItems'
 
 import { withStyles } from '@material-ui/core/styles';
@@ -39,16 +40,11 @@ const titleCss = {
     fontFamily:'cursive',
     margin: 'auto'
   }
-const header = {
-  height:'15vh',
-  padding:'2px',
-  backgroundColor:'black'
-}
 
 const content = {
-  marginTop:'54px',
   height:'100vh',
   backgroundColor:'grey',
+  paddingTop:'64px',
   paddingBotton:'56px'
 }
 
@@ -58,14 +54,6 @@ const bottom = {
   left:'0px',
   width:'100%'
 }
-
-const testCss = {
-  cssClass:{
-    backgroundColor:'red',
-    color:'blue'
-  }
-}
-
 
 const theme = createMuiTheme({
   palette: {
@@ -129,10 +117,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      DataFromApi:{
-        collections:[],
-        collectionsItems:[]
-      }
+        collections:[{id:0, name:'none'}],
+        collectionsItems:[{collectionId:0, name:'none'}]
     };
   }
 
@@ -151,49 +137,8 @@ class App extends Component {
         {/* content */}
         <div style = {content}>
         {/* Coleções */}
-          <List style={{display:'none'}} className={ObjectToCss(testCss)}>
-
-            <List>
-              <ListItem button onClick={this.handleClick}>
-                <ListItemAvatar><SquareAvatar>A</SquareAvatar></ListItemAvatar> 
-                <BoldListItemText inset primary="Tex Sei lá o quê" />
-                {this.state.open ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              <Divider/>
-              <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-              <MuiThemeProvider theme={SmallTheme}>
-                <List  disablePadding>
-                  <ListItem>
-                    <ListItemAvatar><Avatar>1</Avatar></ListItemAvatar>                
-                    <ListItemText primary="1ª Edição" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemAvatar><Avatar>2</Avatar></ListItemAvatar>                
-                    <ListItemText primary="2ª Edição" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemAvatar><Avatar>3</Avatar></ListItemAvatar>                
-                    <ListItemText primary="3ª Edição" />
-                  </ListItem>
-                </List>
-              </MuiThemeProvider>                
-              </Collapse> 
-            </List>
-            <List subheader={<ListSubheader>B <Divider/></ListSubheader>}>
-              <ListItem>
-                <ListItemAvatar><Avatar>B</Avatar></ListItemAvatar>                
-                <ListItemText primary="Ba" />
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar>B</Avatar></ListItemAvatar>                
-                <ListItemText primary="Ba" />
-              </ListItem>
-            </List>
-          </List>
-          <Collection collections = {this.state.DataFromApi.collections} collectionsItems = {this.state.DataFromApi.collectionsItems}>
-            <CollectionItems>
-            </CollectionItems>
-          </Collection>
+          <NewCollectionItem />
+          {/*CreateCollectionsList(this.state.collections, this.state.collectionsItems)*/}
         </div>
         {/* Buttons */}
         <BottomNavigation style={bottom}>
@@ -206,7 +151,6 @@ class App extends Component {
   }
   componentDidMount = () =>{
     this.setState({
-      DataFromApi:{
         collections:[
           {id:1, name:'Tex'},
           {id:2, name:'Tex Especial'},
@@ -223,7 +167,7 @@ class App extends Component {
           {collectionId:3, name:'3º especial'},
           {collectionId:3, name:'4º especial'},
         ]
-      }
+      
     })
   }
 }

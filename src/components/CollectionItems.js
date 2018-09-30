@@ -41,11 +41,11 @@ const SmallTheme = createMuiTheme({
 export default class CollectionItems extends React.Component{
     render = () =>{
         var CollectionItemList = [];
-        this.props.Items.forEach(function(Item) {
+        this.props.collectionsItems.forEach(function(itm) {
             CollectionItemList.push(
                 <ListItem>
-                <ListItemAvatar><Avatar>{Item.Name[0]}</Avatar></ListItemAvatar>                
-                <ListItemText primary={Item.Name} />
+                <ListItemAvatar><Avatar>{itm.name[0]}</Avatar></ListItemAvatar>                
+                <ListItemText primary={itm.name} />
                 </ListItem>
             )
             
@@ -60,5 +60,5 @@ export default class CollectionItems extends React.Component{
     }
 }
 CollectionItems.defaultProps = {
-    Items:[{Name:'None'}]
+    collectionsItems:[{collectionId:0, name:'none'}]
 }

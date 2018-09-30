@@ -11,6 +11,8 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
+import CollectionItems from './CollectionItems'
+
 import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -39,21 +41,42 @@ export default class Collection extends React.Component{
         this.setState(state => ({ open: !state.open }));
     };
 
-    render = () => (
+    render = () =>(
         <List>
             <ListItem button onClick={this.handleClick}>
-                <ListItemAvatar><SquareAvatar>A</SquareAvatar></ListItemAvatar> 
-                <BoldListItemText inset primary={this.props.CollectioName} />
+                <ListItemAvatar><SquareAvatar>{this.props.collectionName[0]}</SquareAvatar></ListItemAvatar> 
+                <BoldListItemText inset primary={this.props.collectionName} />
                 {this.state.open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Divider/>
             <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-                {this.props.children}            
+                <CollectionItems collectionsItems = {this.props.collectionsItems}/>           
             </Collapse>
         </List>
+
+    )
+
+    
+}
+export function CreateCollectionsList (collectionsList, collectionsItems) {
+    var renderList = [];
+    collectionsList.forEach(function(collection) {
+        renderList.push(
+            <Collection collectionName={collection.name} id={collection.id}
+            collectionsItems = {collectionsItems.filter( ci=> ci.collectionId == collection.id)}>
+            </Collection>
+        );
+    }, this);
+
+    return (
+            renderList
     )
 }
 
 Collection.defaultProps = {
-    CollectioName:'None'
+    collectionName:'None',
+    id:0,
+    collectionsItems:[
+        {collectionId:0, name:'none'}
+    ]
 }
